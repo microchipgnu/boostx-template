@@ -41,7 +41,7 @@ export const setClaimAttestation = async (fid: string) => {
     
 
     // 4.3 get previous epoch earnings
-    const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
+    const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data"]
 
     const totalEarnings = JSON.parse(state)[account]
 

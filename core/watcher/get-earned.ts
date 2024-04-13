@@ -48,7 +48,7 @@ export const getEarnedAmount = async (fid: string) => {
         return 0
     }
 
-    const state = JSON.parse(epochStateAttestationsList.rows[0].data)["computed-data-ipfs"]
+    const state = JSON.parse(epochStateAttestationsList.rows[0].data)["computed-data"]
 
     const totalEarnings = JSON.parse(state)[account]
 

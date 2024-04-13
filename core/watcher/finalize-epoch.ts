@@ -8,7 +8,7 @@ import { executeQuery } from "../third-parties/airstack/client";
 import { GET_CASTS_BY_PARENT_HASH } from "../third-parties/airstack/queries";
 import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
 import { abi } from "./basic";
-// import lighthouse from '@lighthouse-web3/sdk'
+import lighthouse from '@lighthouse-web3/sdk'
 
 // this is where we finalize the epoch
 // can set additional rules for earnings here
@@ -101,7 +101,7 @@ export const finalizeEpoch = async () => {
 
         if (previousEpochCasts.total > 0) {
             // 4.3 get previous epoch earnings
-            const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
+            const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data"]
             // TODO: fetch from ipfs
 
             for (const [address, value] of Object.entries(JSON.parse(state))) {
@@ -133,8 +133,7 @@ export const finalizeEpoch = async () => {
     // 6.1 store on filecoin
     // 6.1.1 Generate an API on the fly
     // https://docs.lighthouse.storage/lighthouse-1/how-to/create-an-api-key
-    // const response = await lighthouse.uploadText(JSON.stringify(earnings), process.env.LIGHTHOUSE_STORAGE_API_KEY!, "")
-    // const hash = response.data.Hash
+    const response = await lighthouse.uploadText(JSON.stringify(earnings), process.env.LIGHTHOUSE_STORAGE_API_KEY!, "")
 
     // 6.2 create assertation
 
@@ -142,8 +141,10 @@ export const finalizeEpoch = async () => {
     await signOffchainClient.createAttestation({
         schemaId: process.env.EPOCH_STATE_FULL_SCHEMA_ID!,
         data: {
-            "computed-data-ipfs": JSON.stringify(combinedEarnings, (key, value) =>
-                typeof value === 'bigint' ? value.toString() : value), //TODO: add hash here
+            "computed-data": JSON.stringify(combinedEarnings, (key, value) =>
+                typeof value === 'bigint' ? value.toString() : value),
+            "ipfs-hash": response.data.Hash,
+            "ipfs-url": `https://gateway.lighthouse.storage/ipfs/${response.data.Hash}`,
             "epoch": epochId.toString()
         },
         indexingValue: `epoch-${epochId}`,
