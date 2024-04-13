@@ -70,7 +70,9 @@ export const finalizeEpoch = async () => {
 
         rawBoosterCastDataAirstack.push(cast)
 
-        const address = (cast?.castedBy?.connectedAddresses?.[0]?.address ?? cast?.castedBy?.profileTokenAddress ?? null) as string | null
+        // TODO: later do this with accounts besides the farcaster one
+        // const address = (cast?.castedBy?.connectedAddresses?.[0]?.address ?? cast?.castedBy?.profileTokenAddress ?? null) as string | null
+        const address = cast?.castedBy?.profileTokenAddress ?? null
 
         if (address) {
             earnings[address] = (earnings?.[address] ?? 0) + 1 // TODO: select amount
