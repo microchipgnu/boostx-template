@@ -41,7 +41,7 @@ app.frame("/", (c) => {
 })
 
 app.frame("/claim", async (c) => {
-  const amount = await getEarnedAmount(c.frameData?.address as `0x${string}`)
+  const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
@@ -57,7 +57,7 @@ app.frame("/claim", async (c) => {
 
 app.frame("/claim-finished", async (c) => {
 
-  await setClaimAttestation(c.frameData?.address as `0x${string}`, true)
+  await setClaimAttestation(c.frameData?.fid.toString()!, true)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">

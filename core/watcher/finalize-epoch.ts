@@ -72,10 +72,10 @@ export const finalizeEpoch = async () => {
 
         // TODO: later do this with accounts besides the farcaster one
         // const address = (cast?.castedBy?.connectedAddresses?.[0]?.address ?? cast?.castedBy?.profileTokenAddress ?? null) as string | null
-        const address = cast?.castedBy?.profileTokenAddress ?? null
+        const address = cast?.castedBy?.userAssociatedAddresses[0] ?? null
 
         if (address) {
-            earnings[address] = (earnings?.[address] ?? 0) + 1n // TODO: select amount
+            earnings[address] = (earnings?.[address] ?? 0n) + 10000000000000n // TODO: select amount
         }
     }
 
@@ -103,9 +103,10 @@ export const finalizeEpoch = async () => {
             // 4.3 get previous epoch earnings
             const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
             // TODO: fetch from ipfs
-            const ipfsData = state
 
-            previousEarnings = ipfsData
+            for (const [address, value] of Object.entries(state)) {
+                previousEarnings[address] = BigInt(value as bigint); // Convert string back to BigInt
+            }
         }
     }
 
@@ -117,7 +118,7 @@ export const finalizeEpoch = async () => {
     for (const [address, amount] of Object.entries(earnings)) {
         combinedEarnings[address] = amount; // Initialize or update address with current earnings
     }
-    
+
     // Add or update with previous earnings
     for (const [address, previousAmount] of Object.entries(previousEarnings)) {
         if (combinedEarnings.hasOwnProperty(address)) {
@@ -141,7 +142,8 @@ export const finalizeEpoch = async () => {
     await signOffchainClient.createAttestation({
         schemaId: process.env.EPOCH_STATE_FULL_SCHEMA_ID!,
         data: {
-            "computed-data-ipfs": JSON.stringify(combinedEarnings), //TODO: add hash here
+            "computed-data-ipfs": JSON.stringify(combinedEarnings, (key, value) =>
+                typeof value === 'bigint' ? value.toString() : value), //TODO: add hash here
             "epoch": epochId.toString()
         },
         indexingValue: `epoch-${epochId}`,

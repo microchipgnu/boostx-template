@@ -32,6 +32,22 @@ export const GET_CASTS_BY_PARENT_HASH = `
                     }
                     profileTokenAddress
                   }
+                userAssociatedAddresses
+            }
+        }
+    }
+`
+
+export const GET_USER_ADDRESS = `
+    query GET_USER_ADDRESS($fid:String) {
+        Socials(
+        input: {filter: {userId: {_eq: $fid}, dappName: {_eq: farcaster}}, blockchain: ethereum}
+        ) {
+            Social {
+                dappName
+                userId
+                userAddress
+                userAssociatedAddresses
             }
         }
     }

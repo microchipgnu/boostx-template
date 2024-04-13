@@ -1,13 +1,26 @@
-import { abi } from "./basic";
-import { getPublicClient as getWatcherClient, getClient as getWatcherWalletClient } from "./client";
-import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
 import { IndexService } from "@ethsign/sp-sdk";
-import { encodeFunctionData } from "viem";
+import { executeQuery } from "../third-parties/airstack/client";
+import { GET_USER_ADDRESS } from "../third-parties/airstack/queries";
+import { abi } from "./basic";
+import { getPublicClient as getWatcherClient } from "./client";
 // TODO: use this 
 // import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
 
 
-export const getEarnedAmount = async (account: `0x${string}`) => {
+export const getEarnedAmount = async (fid: string) => {
+    const accountInfoData = await executeQuery({
+        query: GET_USER_ADDRESS,
+        variables: {
+            fid: fid
+        }
+    })
+
+    const account = accountInfoData.data.Socials.userAssociatedAddresses[0] || null
+
+    if(!account) { 
+        return 0
+    }
+
     const indexService = new IndexService("mainnet")
 
     const blockchainClient = getWatcherClient()
