@@ -52,3 +52,13 @@ export const GET_USER_ADDRESS = `
         }
     }
 `
+
+export const GET_CASTS_BY_HASHES = `
+    query GET_CASTS_BY_HASHES ($hashes: [String!]) {
+        FarcasterCasts(input: {filter: {hash: {_in: $hashes}}, blockchain: ALL}) {
+            Cast {
+                url
+            }
+        }
+    }
+` 
