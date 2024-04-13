@@ -60,13 +60,17 @@ export const finalizeEpoch = async () => {
             }
         })
 
-        if (!castData) {
+        console.log(castData)
+
+        const cast = castData.data.FarcasterCasts.Cast[0]
+
+        if (!cast) {
             continue
         }
 
-        rawBoosterCastDataAirstack.push(castData)
+        rawBoosterCastDataAirstack.push(cast)
 
-        const address = (castData?.castedBy?.connectedAddresses?.[0]?.address ?? castData?.castedBy?.profileTokenAddress ?? null) as string | null
+        const address = (cast?.castedBy?.connectedAddresses?.[0]?.address ?? cast?.castedBy?.profileTokenAddress ?? null) as string | null
 
         if (address) {
             earnings[address] = (earnings?.[address] ?? 0) + 1 // TODO: select amount
@@ -129,11 +133,12 @@ export const finalizeEpoch = async () => {
     const nextEpochId = epochId + 1n
 
     const walletClient = getWatcherWalletClient()
-    await walletClient.sendTransaction({
+    const hash = await walletClient.sendTransaction({
         data: encodeFunctionData({
             abi,
             functionName: "setEpochId",
             args: [nextEpochId]
-        })
+        }),
+        to: process.env.CONTRACT_ADDRESS! as `0x${string}`,
     })
 }

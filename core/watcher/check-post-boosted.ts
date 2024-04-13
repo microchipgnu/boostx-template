@@ -6,7 +6,6 @@ import { getPublicClient as getWatcherClient } from "./client"
 import { abi } from "./basic"
 
 interface AttestationData {
-    curatorFid: string,
     castHash: string
 }
 
@@ -50,7 +49,7 @@ export const checkPostBoosted = async ({ data }: { data: AttestationData }) => {
 const matchesCriteria = (row: any, searchData: AttestationData): boolean => {
     try {
         const rowData = JSON.parse(row.data);
-        const matches = rowData?.["curator-fid"] === searchData.curatorFid && rowData?.["cast-hash"] === searchData.castHash
+        const matches = rowData?.["cast-hash"] === searchData.castHash
         return matches;
     } catch (error) {
         console.error('Error matching criteria:', error);

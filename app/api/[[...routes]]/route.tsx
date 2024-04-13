@@ -2,6 +2,7 @@
 
 import { checkPostBoosted } from '@/core/watcher/check-post-boosted'
 import { finalizeEpoch } from '@/core/watcher/finalize-epoch'
+import { getEarnedAmount } from '@/core/watcher/get-earned'
 import { registerPost } from '@/core/watcher/register-boost'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
@@ -39,6 +40,35 @@ app.frame("/", (c) => {
   })
 })
 
+app.frame("/claim", async (c) => {
+  const amount = await getEarnedAmount(c.frameData?.address as `0x${string}`)
+  return c.res({
+    image: (
+      <div tw="flex flex-col items-center justify-center h-full">
+        <div tw="text-white text-3xl flex">You've earned: {amount.toString()} ${process.env.SYMBOL! || ""}</div>
+      </div>
+    ),
+    intents: [
+      <Button action={amount > 0 ? "/claim-finished" : "/actionss"}>{amount > 0 ? "Claim" : "Back to Actions"}</Button>
+    ],
+    imageAspectRatio: "1.91:1"
+  })
+})
+
+app.frame("/claim-finished", (c) => {
+  return c.res({
+    image: (
+      <div tw="flex flex-col items-center justify-center h-full">
+        <div tw="text-white text-3xl">Wait a few seconds for it show up in your account.</div>
+      </div>
+    ),
+    intents: [
+      <Button action="/">Back to Start</Button>
+    ],
+    imageAspectRatio: "1.91:1"
+  })
+})
+
 app.frame('/actions', (c) => {
   return c.res({
     image: (
@@ -61,7 +91,7 @@ app.frame('/actions', (c) => {
       >
         Is Boosted
       </Button.AddCastAction>,
-      // TODO: ADD CLAIM
+      <Button action='/claim'>Claim</Button>,
     ],
   })
 })
@@ -79,7 +109,7 @@ app.castAction('/boost-this', async (c) => {
         castHash: c.actionData.castId.hash
       }
     })
-    return c.res({ message: `Post boosted for ${process.env.SYMBOL}`})
+    return c.res({ message: `Post boosted for ${process.env.SYMBOL}` })
   }
   catch (e: any) {
     console.log(e)
@@ -96,11 +126,10 @@ app.castAction('/is-boosted', async (c) => {
   try {
     const isBoosted = await checkPostBoosted({
       data: {
-        curatorFid: c.actionData.fid.toString(),
         castHash: c.actionData.castId.hash
       }
     })
-    return c.res({ message: false ? `Post boosted ${process.env.SYMBOL}`  : `Post NOT boosted for ${process.env.SYMBOL}` })
+    return c.res({ message: isBoosted ? `Post boosted ${process.env.SYMBOL}` : `Post NOT boosted for ${process.env.SYMBOL}` })
   }
   catch (e: any) {
     console.log(e)
