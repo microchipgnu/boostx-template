@@ -15,7 +15,7 @@
     "@web3-storage/w3up-client": "^12.5.2",
     "bls-eth-wasm": "^1.2.1",
     "boostx": "0.0.0-alpha.6",
-    "frog": "latest",
+    "frog": "0.8.5",
     "hono": "^4",
     "next": "14.1.0",
     "react": "^18",

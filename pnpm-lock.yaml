@@ -21,8 +21,8 @@ dependencies:
     specifier: 0.0.0-alpha.6
     version: 0.0.0-alpha.6(@types/react@18.2.79)(typescript@5.4.5)
   frog:
-    specifier: latest
-    version: 0.8.4(@types/node@20.12.7)(hono@4.2.4)(typescript@5.4.5)(zod@3.22.4)
+    specifier: 0.8.5
+    version: 0.8.5(@types/node@20.12.7)(hono@4.2.4)(typescript@5.4.5)(zod@3.22.4)
   hono:
     specifier: ^4
     version: 4.2.4
@@ -2528,8 +2528,8 @@ packages:
       mime-types: 2.1.35
     dev: false
 
-  /frog@0.8.4(@types/node@20.12.7)(hono@4.2.4)(typescript@5.4.5)(zod@3.22.4):
-    resolution: {integrity: sha512-FOwj4UicBfRARi0PxzpMi9DFy3eW7i/M6ZNwGGJ0/dfG/4SWaIXhpYJ+12UKG9vIA0g5/Pf84CRyZ80NKoUpKw==}
+  /frog@0.8.5(@types/node@20.12.7)(hono@4.2.4)(typescript@5.4.5)(zod@3.22.4):
+    resolution: {integrity: sha512-YP8rf+/gvqcnYzpZlkiMhstnTpyZWeDUi1T1a42gj5sT1kAGAYwh0mB5uQBrBqNQFLyj5Q+NDOXzXMANvY00XA==}
     hasBin: true
     peerDependencies:
       hono: ^4
