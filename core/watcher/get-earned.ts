@@ -24,8 +24,6 @@ export const getEarnedAmount = async (account: `0x${string}`) => {
         indexingValue: `epoch-${epochId}`,
     })
 
-    console.log(epochStateAttestationsList)
-
     if (epochStateAttestationsList.total === 0) {
         return 0
     }

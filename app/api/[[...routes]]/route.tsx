@@ -4,6 +4,7 @@ import { checkPostBoosted } from '@/core/watcher/check-post-boosted'
 import { finalizeEpoch } from '@/core/watcher/finalize-epoch'
 import { getEarnedAmount } from '@/core/watcher/get-earned'
 import { registerPost } from '@/core/watcher/register-boost'
+import { setClaimAttestation } from '@/core/watcher/set-claim-attestation'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
 // import { neynar } from 'frog/hubs'
@@ -21,7 +22,6 @@ const app = new Frog({
 // export const runtime = 'edge'
 
 app.hono.get("/epoch", async (c) => {
-
   await finalizeEpoch()
   return c.text("Done")
 })
@@ -55,7 +55,9 @@ app.frame("/claim", async (c) => {
   })
 })
 
-app.frame("/claim-finished", (c) => {
+app.frame("/claim-finished", async (c) => {
+
+  await setClaimAttestation(c.frameData?.address as `0x${string}`, true)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
