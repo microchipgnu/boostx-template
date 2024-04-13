@@ -49,7 +49,7 @@ app.frame("/claim", async (c) => {
       </div>
     ),
     intents: [
-      <Button action={amount > 0 ? "/claim-finished" : "/actionss"}>{amount > 0 ? "Claim" : "Back to Actions"}</Button>
+      <Button action={amount > 0 ? "/claim-finished" : "/actions"}>{amount > 0 ? "Claim" : "Back to Actions"}</Button>
     ],
     imageAspectRatio: "1.91:1"
   })
