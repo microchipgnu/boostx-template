@@ -8,7 +8,7 @@ import { executeQuery } from "../third-parties/airstack/client";
 import { GET_CASTS_BY_PARENT_HASH } from "../third-parties/airstack/queries";
 import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
 import { abi } from "./basic";
-import lighthouse from '@lighthouse-web3/sdk'
+// import lighthouse from '@lighthouse-web3/sdk'
 
 // this is where we finalize the epoch
 // can set additional rules for earnings here
@@ -108,8 +108,8 @@ export const finalizeEpoch = async () => {
     // 6.1 store on filecoin
     // 6.1.1 Generate an API on the fly
     // https://docs.lighthouse.storage/lighthouse-1/how-to/create-an-api-key
-    const response = await lighthouse.uploadText(JSON.stringify(earnings), process.env.LIGHTHOUSE_STORAGE_API_KEY!, "")
-    const hash = response.data.Hash
+    // const response = await lighthouse.uploadText(JSON.stringify(earnings), process.env.LIGHTHOUSE_STORAGE_API_KEY!, "")
+    // const hash = response.data.Hash
 
     // 6.2 create assertation
 
@@ -117,7 +117,7 @@ export const finalizeEpoch = async () => {
     await signOffchainClient.createAttestation({
         schemaId: process.env.EPOCH_STATE_FULL_SCHEMA_ID!,
         data: {
-            "computed-data-ipfs": hash,
+            "computed-data-ipfs": JSON.stringify(earnings), //TODO: add hash here
             "epoch": epochId.toString()
         },
         indexingValue: `epoch-${epochId}`,
