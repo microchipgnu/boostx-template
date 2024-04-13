@@ -15,7 +15,7 @@ export const setClaimAttestation = async (fid: string, claimOnBehalf = false) =>
         }
     })
 
-    const account = accountInfoData.data.Socials.userAssociatedAddresses[0] || null
+    const account = accountInfoData.data.Socials[0].userAssociatedAddresses[0] || null
 
     if(!account) { 
         return null

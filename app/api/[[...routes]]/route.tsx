@@ -41,6 +41,8 @@ app.frame("/", (c) => {
 })
 
 app.frame("/claim", async (c) => {
+
+  console.log(c.frameData?.fid.toString())
   const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
   return c.res({
     image: (
