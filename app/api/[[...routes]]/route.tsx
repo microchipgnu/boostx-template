@@ -43,9 +43,7 @@ app.frame("/", (c) => {
 })
 
 app.frame("/start-claim", async (c) => {
-
-  console.log(c.frameData?.fid.toString())
-  const amount = await getEarnedAmount("380829")
+  const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
@@ -60,7 +58,7 @@ app.frame("/start-claim", async (c) => {
 })
 
 app.frame("/set-attestation", async (c) => {
-  await setClaimAttestation("380829")
+  await setClaimAttestation(c.frameData?.fid.toString()!)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
@@ -74,7 +72,7 @@ app.frame("/set-attestation", async (c) => {
   })
 })
 app.frame("/claim", async (c) => {
-  await claim("380829")
+  await claim(c.frameData?.fid.toString()!)
 
   return c.res({
     image: (
