@@ -19,9 +19,6 @@ const app = new Frog({
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
 
-app.hono.get("/", async (c) => {
-  return c.text("")
-})
 app.hono.get("/epoch", async (c) => {
 
   await finalizeEpoch()
