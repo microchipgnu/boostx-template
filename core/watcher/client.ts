@@ -1,15 +1,26 @@
 import { createPublicClient, createWalletClient, http } from "viem"
 import { privateKeyToAccount } from "viem/accounts"
-import { baseSepolia } from "viem/chains"
+import { baseSepolia, arbitrumSepolia, gnosisChiado } from "viem/chains"
 
-export const postBoostingContractAddress = "0x7b33E1fb1E71Ef94d082d59FcF59bEC8aA205EB1"
+const getChain = (network: string | undefined) => {
+	switch (network) {
+		case "base-sepolia":
+			return baseSepolia;
+		case "arbitrum-sepolia":
+			return arbitrumSepolia;
+        case "gnosis-chiado":
+            return gnosisChiado;
+		default:
+			return undefined;
+	}
+};
 
-export const getClient = (context: any) => {
-
-    const privateKey = context.env.PRIVATE_KEY! as `0x${string}`
+export const getClient = () => {
+    const chain = getChain(process.env.NETWORK)
+    const privateKey = process.env.PRIVATE_KEY! as `0x${string}`
 
     const client = createWalletClient({
-        chain: baseSepolia,
+        chain: chain,
         transport: http(),
         account: privateKeyToAccount(privateKey)
     })
@@ -18,10 +29,10 @@ export const getClient = (context: any) => {
 }
 
 export const getPublicClient = () => {
+    const chain = getChain(process.env.NETWORK)
 
     return createPublicClient({
-        chain: baseSepolia,
+        chain: chain,
         transport: http()
     })
-
 }

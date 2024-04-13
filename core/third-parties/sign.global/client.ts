@@ -1,11 +1,29 @@
 import { SignProtocolClient, SpMode, EvmChains, OffChainSignType, } from "@ethsign/sp-sdk";
 import { privateKeyToAccount } from "viem/accounts";
 
+const getChain = (network: string | undefined) => {
+    switch (network) {
+        case "base-sepolia":
+            return EvmChains.baseSepolia;
+        case "arbitrum-sepolia":
+            return EvmChains.arbitrumSepolia;
+        case "gnosis-chiado":
+            return EvmChains.gnosisChiado;
+        default:
+            return undefined;
+    }
+}
+
 export const getClient = () => {
+    const chain = getChain(process.env.NETWORK)
     const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
 
+    if (!chain || !privateKey) {
+        throw new Error("Missing chain or privateKey")
+    }
+
     const client = new SignProtocolClient(SpMode.OnChain, {
-        chain: EvmChains.baseSepolia,
+        chain: chain,
         account: privateKeyToAccount(privateKey),
     });
 

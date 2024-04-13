@@ -1,5 +1,5 @@
-export const executeQuery = async ({query, variables, context}: { query: string, variables: any, context?: any }) => {
-    const apiKey = context?.env?.AIRSTACK_API_KEY || process.env.AIRSTACK_API_KEY
+export const executeQuery = async ({query, variables}: { query: string, variables: any }) => {
+    const apiKey = process.env.AIRSTACK_API_KEY
 
     // TODO: make use of env var, remove before commiting
     const response = await fetch('https://api.airstack.xyz/graphql', {

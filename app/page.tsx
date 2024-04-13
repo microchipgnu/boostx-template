@@ -15,6 +15,7 @@ export default function Home() {
   return (
     <div>
       `npm install boostx`
+      {JSON.stringify(process.env)}
     </div>
   )
 }

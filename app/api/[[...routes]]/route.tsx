@@ -1,5 +1,8 @@
 /** @jsxImportSource frog/jsx */
 
+import { checkPostBoosted } from '@/core/watcher/check-post-boosted'
+import { finalizeEpoch } from '@/core/watcher/finalize-epoch'
+import { registerPost } from '@/core/watcher/register-boost'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
 // import { neynar } from 'frog/hubs'
@@ -16,8 +19,13 @@ const app = new Frog({
 // Uncomment to use Edge Runtime
 // export const runtime = 'edge'
 
-app.hono.get("/attestation", (c) => {
-  return c.text("Hello, World!")
+app.hono.get("/", async (c) => {
+  return c.text("")
+})
+app.hono.get("/epoch", async (c) => {
+
+  await finalizeEpoch()
+  return c.text("Done")
 })
 
 app.frame("/", (c) => {
@@ -40,18 +48,19 @@ app.frame('/actions', (c) => {
     intents: [
       <Button.AddCastAction
         action="/boost-this"
-        name="BOOSTX"
+        name={`Boost This (${process.env.SYMBOL})`}
         icon="broadcast"
       >
         Add Boost
       </Button.AddCastAction>,
       <Button.AddCastAction
         action="/is-boosted"
-        name="IS BOOSTXD"
+        name={`Is Boosted (${process.env.SYMBOL})`}
         icon="eye"
       >
         Is Boosted
       </Button.AddCastAction>,
+      // TODO: ADD CLAIM
     ],
   })
 })
@@ -62,13 +71,14 @@ app.castAction('/boost-this', async (c) => {
     }`,
   )
 
-  const castHash = c.actionData.castId.hash
-  console.log(c)
-
-
   try {
-    // await registerPost(castHash, 1000000000000000000n, 100000000000000000n, c)
-    return c.res({ message: 'Post $BOOSTed' })
+    await registerPost({
+      data: {
+        castFid: c.actionData.fid,
+        castHash: c.actionData.castId.hash
+      }
+    })
+    return c.res({ message: `Post boosted for $${process.env.SYMBOL}`})
   }
   catch (e: any) {
     console.log(e)
@@ -82,11 +92,14 @@ app.castAction('/is-boosted', async (c) => {
     }`,
   )
 
-  const castHash = c.actionData.castId.hash
-
   try {
-    // const isBoosted = await checkPostBoosted(castHash) as boolean
-    return c.res({ message: false ? 'Post $BOOSTed' : 'Post not $BOOSTed' })
+    const isBoosted = await checkPostBoosted({
+      data: {
+        curatorFid: c.actionData.fid.toString(),
+        castHash: c.actionData.castId.hash
+      }
+    })
+    return c.res({ message: false ? `Post boosted $${process.env.SYMBOL}`  : `Post NOT boosted for $${process.env.SYMBOL}` })
   }
   catch (e: any) {
     console.log(e)
