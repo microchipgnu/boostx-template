@@ -27,8 +27,8 @@ export const finalizeEpoch = async () => {
     let hasMorePages = true;
     let boostedCasts = [] as { "cast-hash": string, "curator-fid": string }[]
     let rawBoosterCastDataAirstack = []
-    let earnings = {} as Record<string, number>
-    let previousEarnings = {} as Record<string, number>
+    let earnings = {} as Record<string, bigint>
+    let previousEarnings = {} as Record<string, bigint>
 
     while (hasMorePages) {
         const res = await indexService.queryAttestationList({
@@ -75,7 +75,7 @@ export const finalizeEpoch = async () => {
         const address = cast?.castedBy?.profileTokenAddress ?? null
 
         if (address) {
-            earnings[address] = (earnings?.[address] ?? 0) + 1 // TODO: select amount
+            earnings[address] = (earnings?.[address] ?? 0) + 1n // TODO: select amount
         }
     }
 
@@ -111,13 +111,19 @@ export const finalizeEpoch = async () => {
 
     // 5. compute earnings for each address (creator, curator and engager)
 
-    const combinedEarnings = { ...earnings }; // Create a copy of current earnings
+    const combinedEarnings = {} as Record<string, bigint>
 
+    // Copy current earnings to combinedEarnings
+    for (const [address, amount] of Object.entries(earnings)) {
+        combinedEarnings[address] = amount; // Initialize or update address with current earnings
+    }
+    
+    // Add or update with previous earnings
     for (const [address, previousAmount] of Object.entries(previousEarnings)) {
         if (combinedEarnings.hasOwnProperty(address)) {
-            combinedEarnings[address] += previousAmount; // Add previous earnings to current earnings if address exists
+            combinedEarnings[address] += previousAmount; // Add previous earnings to existing amount
         } else {
-            combinedEarnings[address] = previousAmount; // Initialize with previous earnings if address does not exist in current earnings
+            combinedEarnings[address] = previousAmount; // Initialize with previous earnings if address does not exist
         }
     }
 
