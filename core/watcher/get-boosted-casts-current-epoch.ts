@@ -19,7 +19,6 @@ export const getBoostedCastsForCurrentEpoch = async () => {
         functionName: "epochId"
     }) as bigint
 
-
     let page = 1
     let hasMorePages = true;
     let boostedCasts = [] as { "cast-hash": string, "curator-fid": string }[]
@@ -39,6 +38,9 @@ export const getBoostedCastsForCurrentEpoch = async () => {
         hasMorePages = page * res.size < res.total;
         page++;
     }
+
+    // unique
+    boostedCasts = [...new Set(boostedCasts)];
 
     const result = await executeQuery({
         query: GET_CASTS_BY_HASHES,

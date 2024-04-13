@@ -2,6 +2,8 @@ import { getBoostedCastsForCurrentEpoch } from "@/core/watcher/get-boosted-casts
 import { FarcasterEmbed } from "react-farcaster-embed";
 import "react-farcaster-embed/dist/styles.css";
 
+export const revalidate = 5
+
 export default async function Page() {
     const { epochId, urls } = await getBoostedCastsForCurrentEpoch()
 
@@ -14,7 +16,7 @@ export default async function Page() {
             margin: '20px',
             padding: '10px',
             borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',  
         },
         header: {
             fontSize: '24px',
@@ -27,7 +29,8 @@ export default async function Page() {
             marginBottom: '20px'
         },
         embed: {
-            maxWidth: '400px',
+            width: '100%',
+            marginBottom: '20px'
         }
     };
 
