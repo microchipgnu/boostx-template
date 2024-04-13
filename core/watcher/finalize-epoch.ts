@@ -33,7 +33,6 @@ export const finalizeEpoch = async () => {
     while (hasMorePages) {
         const res = await indexService.queryAttestationList({
             schemaId: process.env.BOOST_FULL_SCHEMA_ID,
-            attester: process.env.ADDRESS,
             page,
             mode: "offchain",
             indexingValue: `epoch-${epochId}`,

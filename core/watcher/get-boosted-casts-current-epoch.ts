@@ -27,7 +27,6 @@ export const getBoostedCastsForCurrentEpoch = async () => {
     while (hasMorePages) {
         const res = await indexService.queryAttestationList({
             schemaId: process.env.BOOST_FULL_SCHEMA_ID,
-            attester: process.env.ADDRESS,
             page,
             mode: "offchain",
             indexingValue: `epoch-${epochId}`,
@@ -41,6 +40,8 @@ export const getBoostedCastsForCurrentEpoch = async () => {
         page++;
     }
 
+    console.log(boostedCasts)
+
     const result = await executeQuery({
         query: GET_CASTS_BY_HASHES,
         variables: {
@@ -50,5 +51,6 @@ export const getBoostedCastsForCurrentEpoch = async () => {
 
     const urls = result?.data?.FarcasterCasts?.Cast.map((cast: any) => cast.url)
 
+    console.log(urls)
     return urls
 }
