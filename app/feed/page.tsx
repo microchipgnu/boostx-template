@@ -24,10 +24,10 @@ export default async function Page() {
         description: {
             fontSize: '16px',
             color: '#666',
-            marginBottom: '20px'  // Adds some space between the description and the feeds
+            marginBottom: '20px'
         },
         embed: {
-            width: '100%', // Adjust width as necessary
+            width: '100%',
             marginBottom: '20px',
             borderRadius: '4px',
             boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
@@ -35,6 +35,7 @@ export default async function Page() {
     };
 
     return (
+        // @ts-ignore
         <div style={styles.container}>
             <div style={styles.header}>Boosted Feed (${process.env.SYMBOL})</div>
             <div style={styles.description}>
