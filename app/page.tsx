@@ -15,7 +15,8 @@ export default function Home() {
   return (
     <div>
       `npm install boostx`
-      {JSON.stringify(process.env)}
+
+      <a href='/api/dev'>dev</a>
     </div>
   )
 }

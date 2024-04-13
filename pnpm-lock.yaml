@@ -14,6 +14,9 @@ dependencies:
   '@web3-storage/w3up-client':
     specifier: ^12.5.2
     version: 12.5.2
+  bls-eth-wasm:
+    specifier: ^1.2.1
+    version: 1.2.1
   boostx:
     specifier: 0.0.0-alpha.6
     version: 0.0.0-alpha.6(@types/react@18.2.79)(typescript@5.4.5)

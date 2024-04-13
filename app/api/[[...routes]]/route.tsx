@@ -75,7 +75,7 @@ app.castAction('/boost-this', async (c) => {
         castHash: c.actionData.castId.hash
       }
     })
-    return c.res({ message: `Post boosted for $${process.env.SYMBOL}`})
+    return c.res({ message: `Post boosted for ${process.env.SYMBOL}`})
   }
   catch (e: any) {
     console.log(e)
@@ -96,7 +96,7 @@ app.castAction('/is-boosted', async (c) => {
         castHash: c.actionData.castId.hash
       }
     })
-    return c.res({ message: false ? `Post boosted $${process.env.SYMBOL}`  : `Post NOT boosted for $${process.env.SYMBOL}` })
+    return c.res({ message: false ? `Post boosted ${process.env.SYMBOL}`  : `Post NOT boosted for ${process.env.SYMBOL}` })
   }
   catch (e: any) {
     console.log(e)
