@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/epoch",
-      "schedule": "0 * * * *"
-    }
-  ]
-}
