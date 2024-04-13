@@ -3,7 +3,7 @@ import { FarcasterEmbed } from "react-farcaster-embed";
 import "react-farcaster-embed/dist/styles.css";
 
 export default async function Page() {
-    const boostedCasts = await getBoostedCastsForCurrentEpoch()
+    const { epochId, urls } = await getBoostedCastsForCurrentEpoch()
 
     const styles = {
         container: {
@@ -14,7 +14,7 @@ export default async function Page() {
             margin: '20px',
             padding: '10px',
             borderRadius: '8px',
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
         },
         header: {
             fontSize: '24px',
@@ -27,22 +27,19 @@ export default async function Page() {
             marginBottom: '20px'
         },
         embed: {
-            width: '100%',
-            marginBottom: '20px',
-            borderRadius: '4px',
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)'
+            maxWidth: '400px',
         }
     };
 
     return (
         // @ts-ignore
         <div style={styles.container}>
-            <div style={styles.header}>Boosted Feed (${process.env.SYMBOL})</div>
+            <div style={styles.header}>Boosted Feed (${process.env.SYMBOL}) - Epoch {epochId}</div>
             <div style={styles.description}>
                 Explore the latest boosted casts from the community.
             </div>
             {
-                boostedCasts?.map((url: string, index: number) => (
+                urls?.map((url: string, index: number) => (
                     <div key={index} style={styles.embed}>
                         <FarcasterEmbed url={url} />
                     </div>

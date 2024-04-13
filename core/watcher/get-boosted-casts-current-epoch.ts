@@ -40,8 +40,6 @@ export const getBoostedCastsForCurrentEpoch = async () => {
         page++;
     }
 
-    console.log(boostedCasts)
-
     const result = await executeQuery({
         query: GET_CASTS_BY_HASHES,
         variables: {
@@ -51,6 +49,5 @@ export const getBoostedCastsForCurrentEpoch = async () => {
 
     const urls = result?.data?.FarcasterCasts?.Cast.map((cast: any) => cast.url)
 
-    console.log(urls)
-    return urls
+    return { urls, epochId: epochId.toString() }
 }
