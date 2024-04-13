@@ -15,7 +15,7 @@ export const getEarnedAmount = async (fid: string) => {
         }
     })
 
-    const account = accountInfoData.data.Socials.Socials[0].userAssociatedAddresses[0] || null
+    const account = accountInfoData.data.Socials.Social[0].userAssociatedAddresses[0] || null
 
     if(!account) { 
         return 0
