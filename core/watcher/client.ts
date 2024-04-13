@@ -2,7 +2,7 @@ import { createPublicClient, createWalletClient, http } from "viem"
 import { privateKeyToAccount } from "viem/accounts"
 import { baseSepolia, arbitrumSepolia, gnosisChiado } from "viem/chains"
 
-const getChain = (network: string | undefined) => {
+export const getChain = (network: string | undefined) => {
 	switch (network) {
 		case "base-sepolia":
 			return baseSepolia;

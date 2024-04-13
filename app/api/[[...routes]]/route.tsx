@@ -1,15 +1,17 @@
 /** @jsxImportSource frog/jsx */
 
 import { checkPostBoosted } from '@/core/watcher/check-post-boosted'
+import { getChain } from '@/core/watcher/client'
 import { finalizeEpoch } from '@/core/watcher/finalize-epoch'
 import { getEarnedAmount } from '@/core/watcher/get-earned'
 import { registerPost } from '@/core/watcher/register-boost'
-import { setClaimAttestation } from '@/core/watcher/set-claim-attestation'
+import { claim, setClaimAttestation } from '@/core/watcher/set-claim-attestation'
 import { Button, Frog, TextInput } from 'frog'
 import { devtools } from 'frog/dev'
 // import { neynar } from 'frog/hubs'
 import { handle } from 'frog/next'
 import { serveStatic } from 'frog/serve-static'
+import { getChainId } from 'viem/actions'
 
 const app = new Frog({
   assetsPath: '/',
@@ -40,26 +42,40 @@ app.frame("/", (c) => {
   })
 })
 
-app.frame("/claim", async (c) => {
+app.frame("/start-claim", async (c) => {
 
   console.log(c.frameData?.fid.toString())
-  const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
+  const amount = await getEarnedAmount("380829")
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
-        <div tw="text-white text-3xl flex">You've earned: {amount.toString()} ${process.env.SYMBOL! || ""}</div>
+        <div tw="text-white text-3xl flex">You've {amount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
       </div>
     ),
     intents: [
-      <Button action={amount > 0 ? "/claim-finished" : "/actions"}>{amount > 0 ? "Claim" : "Back to Actions"}</Button>
+      <Button action={amount > 0 ? "/set-attestation" : "/actions"}>{amount > 0 ? "Start Claim" : "Back to Actions"}</Button>
     ],
     imageAspectRatio: "1.91:1"
   })
 })
 
-app.frame("/claim-finished", async (c) => {
+app.frame("/set-attestation", async (c) => {
+  await setClaimAttestation("380829")
+  return c.res({
+    image: (
+      <div tw="flex flex-col items-center justify-center h-full">
+        <div tw="text-white text-3xl">Claim now</div>
+      </div>
+    ),
+    intents: [
+      <Button action="/claim">Claim</Button>
+    ],
+    imageAspectRatio: "1.91:1"
+  })
+})
+app.frame("/claim", async (c) => {
+  await claim("380829")
 
-  await setClaimAttestation(c.frameData?.fid.toString()!, true)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
@@ -95,7 +111,7 @@ app.frame('/actions', (c) => {
       >
         Is Boosted
       </Button.AddCastAction>,
-      <Button action='/claim'>Claim</Button>,
+      <Button action='/start-claim'>Verify Earnings</Button>,
     ],
   })
 })

@@ -11,6 +11,7 @@ const nextConfig = {
         PROJECT_DESCRIPTION: boostxData.PROJECT_DESCRIPTION,
         SYMBOL: boostxData.SYMBOL,
         CONTRACT_ADDRESS: boostxData.CONTRACT_ADDRESS,
+        ADDRESS: boostxData.ADDRESS,
         EPOCH_CRONJOB: boostxData.EPOCH_CRONJOB,
         USER_EARNINGS_SCHEMA: boostxData.USER_EARNINGS_SCHEMA,
         BOOST_FULL_SCHEMA_ID: boostxData.BOOST_FULL_SCHEMA_ID,

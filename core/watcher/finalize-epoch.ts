@@ -79,7 +79,7 @@ export const finalizeEpoch = async () => {
         }
     }
 
-    
+
     // 3.4 convert curatorFid to address
     // 3.4.1 add curator to earnings
 
@@ -105,7 +105,7 @@ export const finalizeEpoch = async () => {
             const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
             // TODO: fetch from ipfs
 
-            for (const [address, value] of Object.entries(state)) {
+            for (const [address, value] of Object.entries(JSON.parse(state))) {
                 previousEarnings[address] = BigInt(value as bigint); // Convert string back to BigInt
             }
         }

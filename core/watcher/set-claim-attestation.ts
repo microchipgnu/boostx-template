@@ -7,7 +7,7 @@ import { getPublicClient as getWatcherClient, getClient as getWatcherWalletClien
 // TODO: use this 
 // import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
 
-export const setClaimAttestation = async (fid: string, claimOnBehalf = false) => {
+export const setClaimAttestation = async (fid: string) => {
     const accountInfoData = await executeQuery({
         query: GET_USER_ADDRESS,
         variables: {
@@ -35,24 +35,31 @@ export const setClaimAttestation = async (fid: string, claimOnBehalf = false) =>
         schemaId: process.env.EPOCH_STATE_FULL_SCHEMA_ID,
         mode: "offchain",
         page: 1,
-        indexingValue: `epoch-${epochId}`,
+        indexingValue: `epoch-${epochId - 1n === 0n ? 1 : epochId - 1n}`,
     })
+
+    
 
     // 4.3 get previous epoch earnings
     const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
 
-    const totalEarnings = state[account]
+    const totalEarnings = JSON.parse(state)[account]
 
-    if (!totalEarnings) {
+    
+    if (!totalEarnings || BigInt(totalEarnings) === 0n || !account || !BigInt(totalEarnings)) {
         return
     }
-
+    
+    console.log(account, totalEarnings)
     // 2. set total earned in contract for account 
-    const walletClient = getWatcherWalletClient()
+    console.log(process.env.ADDRESS)
+    
     const nonce = await blockchainClient.getTransactionCount({
         address: process.env.ADDRESS! as `0x${string}`,
         blockTag: "pending"
     })
+    
+    const walletClient = getWatcherWalletClient()
     const hash = await walletClient.sendTransaction({
         data: encodeFunctionData({
             abi,
@@ -62,16 +69,30 @@ export const setClaimAttestation = async (fid: string, claimOnBehalf = false) =>
         to: process.env.CONTRACT_ADDRESS! as `0x${string}`,
         nonce: nonce
     })
+}
 
-    if (claimOnBehalf) {
-        await walletClient.sendTransaction({
-            data: encodeFunctionData({
-                abi,
-                functionName: "claim",
-                args: [account]
-            }),
-            to: process.env.CONTRACT_ADDRESS! as `0x${string}`,
-            nonce: nonce + 1
-        })
+export const claim = async (fid: string) => {
+    const accountInfoData = await executeQuery({
+        query: GET_USER_ADDRESS,
+        variables: {
+            fid: fid
+        }
+    })
+
+    const account = accountInfoData.data.Socials.Social[0].userAssociatedAddresses[0] || null
+
+    if(!account) { 
+        return null
     }
+    
+    const walletClient = getWatcherWalletClient()
+
+    await walletClient.sendTransaction({
+        data: encodeFunctionData({
+            abi,
+            functionName: "claim",
+            args: [account]
+        }),
+        to: process.env.CONTRACT_ADDRESS! as `0x${string}`,
+    })
 }
