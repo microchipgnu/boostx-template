@@ -48,7 +48,7 @@ export const getBoostedCastsForCurrentEpoch = async () => {
         }
     })
 
-    const urls = result.data.FarcasterCasts.Cast.map((cast: any) => cast.url)
+    const urls = result?.data?.FarcasterCasts?.Cast.map((cast: any) => cast.url)
 
     return urls
 }
