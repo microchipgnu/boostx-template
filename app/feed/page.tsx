@@ -42,7 +42,7 @@ export default async function Page() {
                 Explore the latest boosted casts from the community.
             </div>
             {
-                boostedCasts.map((url: string, index: number) => (
+                boostedCasts?.map((url: string, index: number) => (
                     <div key={index} style={styles.embed}>
                         <FarcasterEmbed url={url} />
                     </div>
