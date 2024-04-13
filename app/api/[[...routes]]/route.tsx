@@ -27,7 +27,11 @@ app.hono.get("/epoch", async (c) => {
 
 app.frame("/", (c) => {
   return c.res({
-    image: "https://i.imgur.com/aty9p8X.gif",
+    image: (
+      <div tw="flex flex-col items-center justify-center h-full">
+        <div tw="text-white text-3xl">Start</div>
+      </div>
+    ),
     intents: [
       <Button action="/actions">Start</Button>
     ],

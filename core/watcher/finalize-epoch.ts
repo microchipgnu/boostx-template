@@ -78,7 +78,7 @@ export const finalizeEpoch = async () => {
 
     // 3.5 add creator to earnings
     // TODO
-    
+
     // 4. get previous epoch id and get all previous earnings
 
     // 4.1 get previous epoch id
@@ -106,7 +106,8 @@ export const finalizeEpoch = async () => {
     // 6. create assertation for EPOCH_STATE_FULL_SCHEMA_ID and store blob on filecoin
 
     // 6.1 store on filecoin
-
+    // 6.1.1 Generate an API on the fly
+    // https://docs.lighthouse.storage/lighthouse-1/how-to/create-an-api-key
     const response = await lighthouse.uploadText(JSON.stringify(earnings), process.env.LIGHTHOUSE_STORAGE_API_KEY!, "")
     const hash = response.data.Hash
 
