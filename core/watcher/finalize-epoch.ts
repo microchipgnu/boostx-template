@@ -79,6 +79,8 @@ export const finalizeEpoch = async () => {
         }
     }
 
+    return 
+
     // 3.4 convert curatorFid to address
     // 3.4.1 add curator to earnings
 

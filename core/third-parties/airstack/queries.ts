@@ -31,8 +31,8 @@ export const GET_CASTS_BY_PARENT_HASH = `
                       address
                     }
                     profileTokenAddress
-                  }
-                userAssociatedAddresses
+                    userAssociatedAddresses
+                }
             }
         }
     }
