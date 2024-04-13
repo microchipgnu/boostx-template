@@ -97,15 +97,27 @@ export const finalizeEpoch = async () => {
             indexingValue: previousEpochId
         })
 
-        // 4.3 get previous epoch earnings
-        const ipfsUrl = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
-        // TODO: fetch from ipfs
-        const ipfsData = {}
+        if (previousEpochCasts.total > 0) {
+            // 4.3 get previous epoch earnings
+            const state = JSON.parse(previousEpochCasts.rows[0].data)["computed-data-ipfs"]
+            // TODO: fetch from ipfs
+            const ipfsData = state
 
-        previousEarnings = ipfsData
+            previousEarnings = ipfsData
+        }
     }
 
     // 5. compute earnings for each address (creator, curator and engager)
+
+    const combinedEarnings = { ...earnings }; // Create a copy of current earnings
+
+    for (const [address, previousAmount] of Object.entries(previousEarnings)) {
+        if (combinedEarnings.hasOwnProperty(address)) {
+            combinedEarnings[address] += previousAmount; // Add previous earnings to current earnings if address exists
+        } else {
+            combinedEarnings[address] = previousAmount; // Initialize with previous earnings if address does not exist in current earnings
+        }
+    }
 
     // 6. create assertation for EPOCH_STATE_FULL_SCHEMA_ID and store blob on filecoin
 
@@ -121,7 +133,7 @@ export const finalizeEpoch = async () => {
     await signOffchainClient.createAttestation({
         schemaId: process.env.EPOCH_STATE_FULL_SCHEMA_ID!,
         data: {
-            "computed-data-ipfs": JSON.stringify(earnings), //TODO: add hash here
+            "computed-data-ipfs": JSON.stringify(combinedEarnings), //TODO: add hash here
             "epoch": epochId.toString()
         },
         indexingValue: `epoch-${epochId}`,
