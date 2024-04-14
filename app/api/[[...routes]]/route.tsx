@@ -40,14 +40,14 @@ app.frame('/actions', (c) => {
     intents: [
       <Button.AddCastAction
         action="/boost-this"
-        name="Boost Post"
+        name="BOOSTX"
         icon="broadcast"
       >
         Add Boost
       </Button.AddCastAction>,
       <Button.AddCastAction
         action="/is-boosted"
-        name="Is Boosted"
+        name="IS BOOSTXD"
         icon="eye"
       >
         Is Boosted
