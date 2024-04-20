@@ -68,7 +68,7 @@ export const getEarnedAmount = async (fid: string) => {
 
     return {
         toClaim: BigInt(totalEarnings || 0n) - BigInt(totalClaimed || 0n),
-        totalEarned: BigInt(totalEarnings || 0n) || 0n,
-        totalClaimed: BigInt(totalClaimed || 0n) || 0n
+        totalEarned: BigInt(totalEarnings || 0n),
+        totalClaimed: BigInt(totalClaimed || 0n)
     }
 }

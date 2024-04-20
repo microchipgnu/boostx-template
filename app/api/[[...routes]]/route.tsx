@@ -53,8 +53,8 @@ app.frame("/start-claim", async (c) => {
       }}>
         <div tw="text-white text-6xl flex">You have {toClaimReadable.toString()} ${process.env.SYMBOL! || ""} to claim</div>
         <div tw="flex flex-row mt-8">
-          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black">Earned {toClaimReadable.toString()} ${process.env.SYMBOL! || ""}</div>
-          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black ml-4">Claimed {toClaimReadable.toString()} ${process.env.SYMBOL! || ""}</div>
+          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black">Earned {earnedReadble.toString()} ${process.env.SYMBOL! || ""}</div>
+          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black ml-4">Claimed {claimedReadable.toString()} ${process.env.SYMBOL! || ""}</div>
         </div>
       </div>
     ),
