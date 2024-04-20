@@ -34,7 +34,7 @@ app.frame("/", (c) => {
   return c.res({
     image: `${getBaseUrl()}/boost/BG1.png`,
     intents: [
-      <Button action="/actions">Start</Button>,
+      <Button action="/actions">Install Actions</Button>,
       <Button action="/start-claim">Verify Earnings</Button>
     ],
     imageAspectRatio: "1.91:1"
