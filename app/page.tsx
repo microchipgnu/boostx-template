@@ -26,6 +26,9 @@ export default function Home() {
   const userEarningsSchema = process.env.USER_EARNINGS_SCHEMA
   const boostFullSchemaId = process.env.BOOST_FULL_SCHEMA_ID
   const epochStateFullSchemaId = process.env.EPOCH_STATE_FULL_SCHEMA_ID
+  const vercelUrl = process.env.VERCEL_URL
+
+  const warpcastLink = `https://warpcast.com/~/compose?text=${encodeURI(`Frame for $${symbol} community`)}&embeds[]=https://${vercelUrl}/api`
 
   const containerStyle: CSSProperties = {
     display: 'flex',
@@ -55,6 +58,11 @@ export default function Home() {
     color: '#f4f4f9',
     margin: '10px 0'
   };
+  const descriptionStyle = {
+    fontSize: '1rem',
+    color: '#fff',
+    margin: '10px 0'
+  };
 
   const infoStyle = {
     fontSize: '1rem',
@@ -65,6 +73,7 @@ export default function Home() {
   return (
     <div style={containerStyle}>
       <div style={titleStyle}>Welcome to the ${symbol} Community!</div>
+      <p style={descriptionStyle}><a style={infoStyle} href={warpcastLink}>Share Frame on Warpcast</a></p>
       <div style={sectionStyle}>
         <p style={infoStyle}>Network: {network}</p>
         <p style={infoStyle}>Address: {address}</p>

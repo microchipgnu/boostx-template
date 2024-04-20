@@ -30,13 +30,10 @@ app.hono.get("/epoch", async (c) => {
 
 app.frame("/", (c) => {
   return c.res({
-    image: (
-      <div tw="flex flex-col items-center justify-center h-full">
-        <div tw="text-white text-3xl">Start</div>
-      </div>
-    ),
+    image: `https://${process.env.VERCEL_URL}/boost/BG1.png`,
     intents: [
-      <Button action="/actions">Start</Button>
+      <Button action="/actions">Start</Button>,
+      <Button action="/start-claim">Verify Earnings</Button>
     ],
     imageAspectRatio: "1.91:1"
   })
@@ -45,11 +42,7 @@ app.frame("/", (c) => {
 app.frame("/start-claim", async (c) => {
   const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
   const divisor = BigInt(Math.pow(10, 18));
-
-  console.log(amount, divisor)
-
   const readableAmount = amount / divisor
-  console.log(readableAmount)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
