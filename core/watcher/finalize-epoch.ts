@@ -1,13 +1,10 @@
 import { DataLocationOffChain, IndexService, } from "@ethsign/sp-sdk";
 import { getPublicClient as getWatcherClient, getClient as getWatcherWalletClient } from "./client";
-// TODO: use this 
-// import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
-// instead of this
+import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic"
 import { encodeFunctionData } from "viem";
 import { executeQuery } from "../third-parties/airstack/client";
 import { GET_CASTS_BY_PARENT_HASH } from "../third-parties/airstack/queries";
 import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
-import { abi } from "./basic";
 
 // Filecoin
 // Error: Cannot find module 'bls-eth-wasm' in prod
@@ -84,6 +81,7 @@ export const finalizeEpoch = async () => {
 
     // 3.4 convert curatorFid to address
     // 3.4.1 add curator to earnings
+    // TODO
 
     // 3.5 add creator to earnings
     // TODO
@@ -143,7 +141,7 @@ export const finalizeEpoch = async () => {
             Hash: "Qm...",
         }
     }
-    
+
     // 6.2 create assertation
     const signOffchainClient = getOffchainSignClient()
     await signOffchainClient.createAttestation({

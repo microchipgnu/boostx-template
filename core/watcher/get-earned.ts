@@ -1,10 +1,8 @@
 import { IndexService } from "@ethsign/sp-sdk";
 import { executeQuery } from "../third-parties/airstack/client";
 import { GET_USER_ADDRESS } from "../third-parties/airstack/queries";
-import { abi } from "./basic";
 import { getPublicClient as getWatcherClient } from "./client";
-// TODO: use this 
-// import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
+import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic"
 
 
 export const getEarnedAmount = async (fid: string) => {
@@ -18,7 +16,7 @@ export const getEarnedAmount = async (fid: string) => {
     const account = accountInfoData.data.Socials.Social[0].userAssociatedAddresses[0] || null
 
     if(!account) { 
-        return 0
+        return 0n
     }
 
     const indexService = new IndexService("mainnet")
@@ -45,7 +43,7 @@ export const getEarnedAmount = async (fid: string) => {
     })
 
     if (epochStateAttestationsList.total === 0) {
-        return 0
+        return 0n
     }
 
     const state = JSON.parse(epochStateAttestationsList.rows[0].data)["computed-data"]
@@ -53,7 +51,7 @@ export const getEarnedAmount = async (fid: string) => {
     const totalEarnings = JSON.parse(state)[account]
 
     if (!totalEarnings) {
-        return 0
+        return 0n
     }
 
     return BigInt(totalEarnings || 0n) - BigInt(totalClaimed || 0n)

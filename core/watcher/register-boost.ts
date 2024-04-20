@@ -1,7 +1,4 @@
-// TODO: use this 
-// import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
-// instead of this
-import { abi } from "./basic"
+import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic"
 import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
 import { getPublicClient as getWatcherClient } from "./client"
 import { DataLocationOffChain } from "@ethsign/sp-sdk"

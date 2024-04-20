@@ -44,10 +44,13 @@ app.frame("/", (c) => {
 
 app.frame("/start-claim", async (c) => {
   const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
+  const divisor = BigInt(Math.pow(10, 18));
+
+  const readableAmount = amount / divisor
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">
-        <div tw="text-white text-3xl flex">You've {amount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
+        <div tw="text-white text-3xl flex">You've {readableAmount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
       </div>
     ),
     intents: [

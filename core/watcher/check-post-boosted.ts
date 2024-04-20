@@ -1,9 +1,6 @@
 import { IndexService, } from "@ethsign/sp-sdk";
 import { getPublicClient as getWatcherClient } from "./client"
-// TODO: use this 
-// import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
-// instead of this
-import { abi } from "./basic"
+import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic"
 
 interface AttestationData {
     castHash: string

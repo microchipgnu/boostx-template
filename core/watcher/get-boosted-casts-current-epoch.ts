@@ -1,13 +1,8 @@
-import { DataLocationOffChain, IndexService, } from "@ethsign/sp-sdk";
-import { getPublicClient as getWatcherClient, getClient as getWatcherWalletClient } from "./client";
-// TODO: use this 
-// import { abi, bytecode } from "boostx/dist/core/contracts/basic-erc-20/basic"
-// instead of this
-import { encodeFunctionData } from "viem";
+import { IndexService } from "@ethsign/sp-sdk";
+import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic";
 import { executeQuery } from "../third-parties/airstack/client";
-import { GET_CASTS_BY_HASHES, GET_CASTS_BY_PARENT_HASH } from "../third-parties/airstack/queries";
-import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
-import { abi } from "./basic";
+import { GET_CASTS_BY_HASHES } from "../third-parties/airstack/queries";
+import { getPublicClient as getWatcherClient } from "./client";
 
 export const getBoostedCastsForCurrentEpoch = async () => {
     const indexService = new IndexService("mainnet")
