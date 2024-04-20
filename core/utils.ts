@@ -12,3 +12,11 @@ export function getTodayDateString() {
     let today = new Date();
     return today.toISOString().split('T')[0];
 }
+
+export const getBaseUrl = () => {
+    const vercelUrl = process.env.VERCEL_URL
+
+    const url = vercelUrl ? `https://${vercelUrl}` : 'http://localhost:3000'
+
+    return url
+} 

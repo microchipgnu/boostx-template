@@ -1,5 +1,6 @@
 /** @jsxImportSource frog/jsx */
 
+import { getBaseUrl } from '@/core/utils'
 import { checkPostBoosted } from '@/core/watcher/check-post-boosted'
 import { getChain } from '@/core/watcher/client'
 import { finalizeEpoch } from '@/core/watcher/finalize-epoch'
@@ -29,8 +30,9 @@ app.hono.get("/epoch", async (c) => {
 })
 
 app.frame("/", (c) => {
+  console.log(`${getBaseUrl()}/boost/BG1.png`)
   return c.res({
-    image: `https://${process.env.VERCEL_URL}/boost/BG1.png`,
+    image: `${getBaseUrl()}/boost/BG1.png`,
     intents: [
       <Button action="/actions">Start</Button>,
       <Button action="/start-claim">Verify Earnings</Button>
@@ -45,8 +47,10 @@ app.frame("/start-claim", async (c) => {
   const readableAmount = amount / divisor
   return c.res({
     image: (
-      <div tw="flex flex-col items-center justify-center h-full">
-        <div tw="text-white text-3xl flex">You've {readableAmount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
+      <div tw="flex flex-col items-center justify-center h-full" style={{
+        backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
+      }}>
+        <div tw="text-white text-6xl flex">You have {readableAmount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
       </div>
     ),
     intents: [
@@ -60,7 +64,9 @@ app.frame("/set-attestation", async (c) => {
   await setClaimAttestation(c.frameData?.fid.toString()!)
   return c.res({
     image: (
-      <div tw="flex flex-col items-center justify-center h-full">
+      <div tw="flex flex-col items-center justify-center h-full" style={{
+        backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
+      }}>
         <div tw="text-white text-3xl">Claim now</div>
       </div>
     ),
@@ -75,7 +81,9 @@ app.frame("/claim", async (c) => {
 
   return c.res({
     image: (
-      <div tw="flex flex-col items-center justify-center h-full">
+      <div tw="flex flex-col items-center justify-center h-full" style={{
+        backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
+      }}>
         <div tw="text-white text-3xl">Wait a few seconds for it show up in your account.</div>
       </div>
     ),
@@ -89,8 +97,10 @@ app.frame("/claim", async (c) => {
 app.frame('/actions', (c) => {
   return c.res({
     image: (
-      <div tw="flex flex-col items-center justify-center h-full">
-        <div tw="text-white text-3xl">Test Actions</div>
+      <div tw="flex flex-col items-center justify-center h-full" style={{
+        backgroundImage: `url(${getBaseUrl()}/boost/BG3.png)`,
+      }}>
+        <div tw="text-white text-5xl text-center">Install community actions or verify your earnings</div>
       </div>
     ),
     intents: [
