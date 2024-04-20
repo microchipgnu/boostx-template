@@ -41,19 +41,25 @@ app.frame("/", (c) => {
 })
 
 app.frame("/start-claim", async (c) => {
-  const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
+  const { toClaim, totalEarned, totalClaimed } = await getEarnedAmount(c.frameData?.fid.toString()!)
   const divisor = BigInt(Math.pow(10, 18));
-  const readableAmount = amount / divisor
+  const toClaimReadable = toClaim / divisor
+  const earnedReadble = (totalEarned || 0n) / divisor
+  const claimedReadable = (totalClaimed || 0n) / divisor
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full" style={{
         backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
       }}>
-        <div tw="text-white text-6xl flex">You have {readableAmount.toString()} ${process.env.SYMBOL! || ""} to claim</div>
+        <div tw="text-white text-6xl flex">You have {toClaimReadable.toString()} ${process.env.SYMBOL! || ""} to claim</div>
+        <div tw="flex flex-row mt-8">
+          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black">Earned {toClaimReadable.toString()} ${process.env.SYMBOL! || ""}</div>
+          <div tw="text-white text-3xl flex bg-white rounded-full p-4 text-black ml-4">Claimed {toClaimReadable.toString()} ${process.env.SYMBOL! || ""}</div>
+        </div>
       </div>
     ),
     intents: [
-      <Button action={amount > 0 ? "/set-attestation" : "/actions"}>{amount > 0 ? "Start Claim" : "Back to Actions"}</Button>
+      <Button action={toClaim > 0 ? "/set-attestation" : "/actions"}>{toClaim > 0 ? "Start Claim" : "Back to Actions"}</Button>
     ],
     imageAspectRatio: "1.91:1"
   })
@@ -66,7 +72,7 @@ app.frame("/set-attestation", async (c) => {
       <div tw="flex flex-col items-center justify-center h-full" style={{
         backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
       }}>
-        <div tw="text-white text-3xl">Claim now</div>
+        <div tw="text-white text-6xl text-center">Claim now</div>
       </div>
     ),
     intents: [
@@ -83,7 +89,7 @@ app.frame("/claim", async (c) => {
       <div tw="flex flex-col items-center justify-center h-full" style={{
         backgroundImage: `url(${getBaseUrl()}/boost/BG4.png)`,
       }}>
-        <div tw="text-white text-3xl">Wait a few seconds for it show up in your account.</div>
+        <div tw="text-white text-6xl text-center">Wait a few seconds for it show up in your account.</div>
       </div>
     ),
     intents: [

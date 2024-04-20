@@ -77,12 +77,12 @@ export const finalizeEpoch = async () => {
 
         // 3.4 convert curatorFid to address
         // 3.4.1 add curator to earnings
-        const curatorFid = boostedCast?.["cast-hash"]
+        const curatorFid = boostedCast?.["curator-fid"]
 
         const accountInfoData = await executeQuery({
             query: GET_USER_ADDRESS,
             variables: {
-                fid: curatorFid
+                fid: curatorFid.toString()
             }
         })
 

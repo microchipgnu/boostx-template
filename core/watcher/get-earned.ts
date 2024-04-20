@@ -16,7 +16,11 @@ export const getEarnedAmount = async (fid: string) => {
     const account = accountInfoData.data.Socials.Social[0].userAssociatedAddresses[0] || null
 
     if(!account) { 
-        return 0n
+        return {
+            toClaim: 0n,
+            totalClaimed: 0n,
+            totalEarnings: 0n
+        }
     }
 
     const indexService = new IndexService("mainnet")
@@ -43,7 +47,11 @@ export const getEarnedAmount = async (fid: string) => {
     })
 
     if (epochStateAttestationsList.total === 0) {
-        return 0n
+        return {
+            toClaim: 0n,
+            totalClaimed: 0n,
+            totalEarnings: 0n
+        }
     }
 
     const state = JSON.parse(epochStateAttestationsList.rows[0].data)["computed-data"]
@@ -51,8 +59,16 @@ export const getEarnedAmount = async (fid: string) => {
     const totalEarnings = JSON.parse(state)[account]
 
     if (!totalEarnings) {
-        return 0n
+        return {
+            toClaim: 0n,
+            totalClaimed: 0n,
+            totalEarnings: 0n
+        }
     }
 
-    return BigInt(totalEarnings || 0n) - BigInt(totalClaimed || 0n)
+    return {
+        toClaim: BigInt(totalEarnings || 0n) - BigInt(totalClaimed || 0n),
+        totalEarned: BigInt(totalEarnings || 0n) || 0n,
+        totalClaimed: BigInt(totalClaimed || 0n) || 0n
+    }
 }
