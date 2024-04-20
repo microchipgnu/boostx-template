@@ -10,6 +10,13 @@ export const GET_CAST_INFO = `
                 hash
                 rawText
                 castedAtTimestamp
+                castedBy {
+                    connectedAddresses {
+                      address
+                    }
+                    profileTokenAddress
+                    userAssociatedAddresses
+                }
             }
         }
     }

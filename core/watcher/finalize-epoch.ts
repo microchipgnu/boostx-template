@@ -3,7 +3,7 @@ import { getPublicClient as getWatcherClient, getClient as getWatcherWalletClien
 import { abi } from "boostx/dist/core/contracts/basic-erc-20/basic"
 import { encodeFunctionData } from "viem";
 import { executeQuery } from "../third-parties/airstack/client";
-import { GET_CASTS_BY_PARENT_HASH } from "../third-parties/airstack/queries";
+import { GET_CASTS_BY_PARENT_HASH, GET_CAST_INFO, GET_USER_ADDRESS } from "../third-parties/airstack/queries";
 import { getOffchainClient as getOffchainSignClient } from "../third-parties/sign.global/client"
 
 // Filecoin
@@ -59,8 +59,6 @@ export const finalizeEpoch = async () => {
             }
         })
 
-        console.log(castData)
-
         const cast = castData.data.FarcasterCasts.Cast[0]
 
         if (!cast) {
@@ -76,15 +74,45 @@ export const finalizeEpoch = async () => {
         if (address) {
             earnings[address] = (earnings?.[address] ?? 0n) + 1000000000000000000n
         }
+
+        // 3.4 convert curatorFid to address
+        // 3.4.1 add curator to earnings
+        const curatorFid = boostedCast?.["cast-hash"]
+
+        const accountInfoData = await executeQuery({
+            query: GET_USER_ADDRESS,
+            variables: {
+                fid: curatorFid
+            }
+        })
+
+        const curatorAddress = accountInfoData.data.Socials.Social[0].userAssociatedAddresses[0] || null
+
+        if (curatorAddress) {
+            earnings[curatorAddress] = (earnings?.[curatorAddress] ?? 0n) + 1000000000000000000n
+        }
+
+        // 3.5 add creator to earnings
+
+         const originalCastData = await executeQuery({
+            query: GET_CAST_INFO,
+            variables: {
+                hash: boostedCast?.["cast-hash"] as string
+            }
+        })
+
+        const originalCast = originalCastData.data.FarcasterCasts.Cast[0]
+
+        if (!originalCast) {
+            continue
+        }
+
+        const creatorAddress = originalCast?.castedBy?.userAssociatedAddresses[0] ?? null
+
+        if (creatorAddress) {
+            earnings[address] = (earnings?.[address] ?? 0n) + 1000000000000000000n
+        }
     }
-
-
-    // 3.4 convert curatorFid to address
-    // 3.4.1 add curator to earnings
-    // TODO
-
-    // 3.5 add creator to earnings
-    // TODO
 
     // 4. get previous epoch id and get all previous earnings
 

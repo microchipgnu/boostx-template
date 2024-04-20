@@ -88,6 +88,7 @@ export default function Home() {
       </div>
       <a href="/feed" style={{
         marginTop: '20px',
+        marginBottom: '20px',
         padding: '10px 15px',
         backgroundColor: '#0070f3',
         color: 'white',
@@ -95,7 +96,7 @@ export default function Home() {
         borderRadius: '5px',
         transition: 'background-color 0.3s'
       }}>Check Boosted Feed</a>
-      <a href="/api/dev" style={{
+      {/* <a href="/api/dev" style={{
         marginTop: '20px',
         padding: '10px 15px',
         backgroundColor: '#0070f3',
@@ -103,7 +104,8 @@ export default function Home() {
         textDecoration: 'none',
         borderRadius: '5px',
         transition: 'background-color 0.3s'
-      }}>Dev</a>
+      }}>Dev</a> */}
+      <p style={descriptionStyle}><a style={infoStyle} href={"https://"}>Learn more about BoostX</a></p>
     </div>
   );
 }

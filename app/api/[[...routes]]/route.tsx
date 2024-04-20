@@ -30,7 +30,6 @@ app.hono.get("/epoch", async (c) => {
 })
 
 app.frame("/", (c) => {
-  console.log(`${getBaseUrl()}/boost/BG1.png`)
   return c.res({
     image: `${getBaseUrl()}/boost/BG1.png`,
     intents: [
