@@ -46,7 +46,10 @@ app.frame("/start-claim", async (c) => {
   const amount = await getEarnedAmount(c.frameData?.fid.toString()!)
   const divisor = BigInt(Math.pow(10, 18));
 
+  console.log(amount, divisor)
+
   const readableAmount = amount / divisor
+  console.log(readableAmount)
   return c.res({
     image: (
       <div tw="flex flex-col items-center justify-center h-full">

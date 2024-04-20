@@ -86,6 +86,15 @@ export default function Home() {
         borderRadius: '5px',
         transition: 'background-color 0.3s'
       }}>Check Boosted Feed</a>
+      <a href="/api/dev" style={{
+        marginTop: '20px',
+        padding: '10px 15px',
+        backgroundColor: '#0070f3',
+        color: 'white',
+        textDecoration: 'none',
+        borderRadius: '5px',
+        transition: 'background-color 0.3s'
+      }}>Dev</a>
     </div>
   );
 }

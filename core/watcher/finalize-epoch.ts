@@ -74,7 +74,7 @@ export const finalizeEpoch = async () => {
         const address = cast?.castedBy?.userAssociatedAddresses[0] ?? null
 
         if (address) {
-            earnings[address] = (earnings?.[address] ?? 0n) + 10000000000000n // TODO: select amount
+            earnings[address] = (earnings?.[address] ?? 0n) + 1000000000000000000n // TODO: select amount
         }
     }
 
