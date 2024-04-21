@@ -18,7 +18,7 @@ BoostX aims to minimize costs while maximizing community engagement through a sc
 3. System Mechanics:
     - Attestation Mechanism: Off-chain validation of activities, which are periodically confirmed on-chain.
     - Watcher: Monitors activities to create attestations.
-    - Token Contract: Manages the supply of tokens based on attestations, allowing minting on an EVM-compatible chain.
+    - Token Contract: Manages the supply of tokens based on attestations, allowing minting on an EVM-compatible chain. See source code: https://github.com/microchipgnu/boostx/blob/main/core/contracts/basic-erc-20/basic.sol
 
 ![image](https://github.com/microchipgnu/boostx-template/assets/5553483/8ad8b565-2c29-4da8-ba33-2627cc3076e4)
 
