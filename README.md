@@ -5,6 +5,34 @@ It operates on a cycle of epochs, validating offchain actions like post creation
 
 BoostX aims to minimize costs while maximizing community engagement through a scalable, efficient token distribution system. It is designed to support the Ethereum ecosystem's growth by increasing transaction volume and facilitating DApp development
 
+## How to Boost your community (as a dev)
+
+1. Install BoostX CLI
+
+```
+npm i -g boostx
+```
+
+2. Clone the template (https://github.com/microchipgnu/boostx-template)
+
+```
+git clone https://github.com/microchipgnu/boostx-template.git
+```
+
+3. Run BoostX on your project folder
+
+```
+$ boostx new
+```
+
+4. Deploy to a provider like Vercel
+
+```
+vercel deploy
+```
+
+5. Share the link with your community. It is powered with Farcaster Actions and Frames for increased boosting!
+
 ## Key Components
 
 1. CLI Tool (boostx): Simplifies the setup process by handling account creation, network selection, and deployment tasks.
