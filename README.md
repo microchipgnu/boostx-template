@@ -1,5 +1,7 @@
 # Boost engagement on Farcaster (Frames and Attestation System)
 
+![BG1](https://github.com/microchipgnu/boostx-template/assets/5553483/aacc69aa-8a9f-497d-a48e-784c2133c2ae)
+
 The BoostX is a sufficiently decentralized system for community engagement and incentivization using a custom ERC-20 token.
 It operates on a cycle of epochs, validating offchain actions like post creation and engagement and consolidating these into on-chain attestations to facilitate token minting.
 
