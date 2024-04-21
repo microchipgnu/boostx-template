@@ -11,7 +11,7 @@ BoostX aims to minimize costs while maximizing community engagement through a sc
 
 1. Install BoostX CLI ([source code](https://github.com/microchipgnu/boostx))
 
-![Gravacaodoecra2024-04-21as03 04 44-ezgif com-video-to-gif-converter](https://github.com/microchipgnu/boostx-template/assets/5553483/63409088-d121-429f-b787-ce5e8a734899)
+![Gravacaodoecra2024-04-21as03 04 44-ezgif com-video-to-gif-converter (1)](https://github.com/microchipgnu/boostx-template/assets/5553483/42eb2589-a36e-4d23-aadc-63021eaca552)
 
 
 ```
