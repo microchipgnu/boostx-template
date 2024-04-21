@@ -15,8 +15,7 @@ Source code: https://github.com/microchipgnu/boostx-template
 npm i -g boostx
 ```
 
-2. Clone the template (https://github.com/microchipgnu/boostx-template)
-
+2. Clone the template 
 ```
 git clone https://github.com/microchipgnu/boostx-template.git
 ```
