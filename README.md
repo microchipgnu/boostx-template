@@ -9,9 +9,10 @@ BoostX aims to minimize costs while maximizing community engagement through a sc
 
 ## How to Boost your community (as a dev)
 
-1. Install BoostX CLI
+1. Install BoostX CLI ([source code](https://github.com/microchipgnu/boostx))
 
-Source code: https://github.com/microchipgnu/boostx
+![image](https://github.com/microchipgnu/boostx-template/assets/5553483/75a00883-1873-4f7e-a5d8-f237428ecd00)
+
 
 ```
 npm i -g boostx
