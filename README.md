@@ -42,6 +42,9 @@ BoostX aims to minimize costs while maximizing community engagement through a sc
 | Arbitrum Sepolia | https://arbitrum-test-2-d4j67z877-inventionshub.vercel.app   |
 | Gnosis Chiado    | https://boostx-gnosis.vercel.app/                            |
 
+## Farcaster Frames and Actions
+
+![Design sem título (3)](https://github.com/microchipgnu/boostx-template/assets/5553483/044161ef-4c88-4baa-867e-0d934f2b566f)
 
 ## Development
 
